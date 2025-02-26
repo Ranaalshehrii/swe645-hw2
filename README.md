@@ -24,8 +24,3 @@ Before setting up this project, ensure you have the following tools installed:
 
 You can verify that these are installed using the following commands:
 
-```bash
-git --version
-mvn --version
-docker --version
-java -version
