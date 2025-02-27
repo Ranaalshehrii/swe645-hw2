@@ -103,6 +103,13 @@ Open your web browser and go to the following URL to see the application running
 ```
 http://localhost:8080/StudentSurvey/survey.html
 ```
+
+#### 3. Pull the Image:
+Use the following command to pull the new image after confirming its existence on Docker Hub:
+
+```
+docker push ranaalshehri/swe645-hw2-student-survey-amd64:latest
+```
 ---
 
 ## Verifying the Application
