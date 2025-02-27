@@ -119,8 +119,6 @@ Once you run the application, ensure the following pages are accessible:
 - **Homepage**: `http://localhost:8080/StudentSurvey/` (index.html)
 - **Survey Page**: `http://localhost:8080/StudentSurvey/survey.html`
 
-The `survey.html` page should display the form that users can fill out.
-
 ---
 ## Docker Setup
 If you decide to run the app using Docker, the `Dockerfile` provided in the project is configured to work with Tomcat 9.
