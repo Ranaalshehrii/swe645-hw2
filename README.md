@@ -67,7 +67,7 @@ You should see the file `SWE645_HW2_StudentSurvey.war`.
 ---
 
 ## Running the Application Running with Docker
-Once you've built the `.war` file, you can run the application in two ways: using Docker or directly with Tomcat.
+Once you've built the `.war` file, you can run the application using Docker.
 
 #### 1. Build the Docker image:
 Run the following command to build the Docker image for the application:
@@ -82,6 +82,22 @@ docker run -d -p 8080:8080 swe645-hw2-studentsurvey:latest
 ```
 
 #### 3.Access the application:
+Open your web browser and go to the following URL to see the application running:
+
+```
+http://localhost:8080/StudentSurvey/survey.html
+```
+---
+## Rebuild and Push for a Different Architecture (AMD64) 
+Follow these steps:
+
+#### 1. Rebuild the Image for the AMD64 Architecture:
+Run the following command:
+```
+docker buildx build --platform linux/amd64 -t ranaalshehri/swe645-hw2-student-survey-amd64:latest .
+```
+
+#### 2.Push the New Image to Docker Hub:
 Open your web browser and go to the following URL to see the application running:
 
 ```
