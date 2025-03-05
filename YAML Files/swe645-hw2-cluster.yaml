@@ -1,0 +1,232 @@
+apiVersion: provisioning.cattle.io/v1
+kind: Cluster
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-p9hjq
+  creationTimestamp: '2025-02-27T11:00:20Z'
+  finalizers:
+    - wrangler.cattle.io/provisioning-cluster-remove
+    - wrangler.cattle.io/rke-cluster-remove
+    - wrangler.cattle.io/cloud-config-secret-remover
+  generation: 2
+  managedFields:
+    - apiVersion: provisioning.cattle.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            .: {}
+            v:"wrangler.cattle.io/provisioning-cluster-remove": {}
+            v:"wrangler.cattle.io/rke-cluster-remove": {}
+        f:spec:
+          .: {}
+          f:kubernetesVersion: {}
+          f:localClusterAuthEndpoint: {}
+          f:rkeConfig:
+            .: {}
+            f:chartValues:
+              .: {}
+              f:rke2-calico: {}
+            f:dataDirectories: {}
+            f:etcd:
+              .: {}
+              f:snapshotRetention: {}
+              f:snapshotScheduleCron: {}
+            f:machineGlobalConfig:
+              .: {}
+              f:cni: {}
+              f:disable-kube-proxy: {}
+              f:etcd-expose-metrics: {}
+            f:machinePoolDefaults: {}
+            f:machineSelectorConfig: {}
+            f:registries: {}
+            f:upgradeStrategy:
+              .: {}
+              f:controlPlaneConcurrency: {}
+              f:controlPlaneDrainOptions:
+                .: {}
+                f:deleteEmptyDirData: {}
+                f:disableEviction: {}
+                f:enabled: {}
+                f:force: {}
+                f:gracePeriod: {}
+                f:ignoreDaemonSets: {}
+                f:ignoreErrors: {}
+                f:postDrainHooks: {}
+                f:preDrainHooks: {}
+                f:skipWaitForDeleteTimeoutSeconds: {}
+                f:timeout: {}
+              f:workerConcurrency: {}
+              f:workerDrainOptions:
+                .: {}
+                f:deleteEmptyDirData: {}
+                f:disableEviction: {}
+                f:enabled: {}
+                f:force: {}
+                f:gracePeriod: {}
+                f:ignoreDaemonSets: {}
+                f:ignoreErrors: {}
+                f:postDrainHooks: {}
+                f:preDrainHooks: {}
+                f:skipWaitForDeleteTimeoutSeconds: {}
+                f:timeout: {}
+      manager: rancher
+      operation: Update
+      time: '2025-02-27T11:00:20Z'
+    - apiVersion: provisioning.cattle.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers:
+            v:"wrangler.cattle.io/cloud-config-secret-remover": {}
+      manager: rancher-v2.10.2-secret-migrator
+      operation: Update
+      time: '2025-02-27T11:00:20Z'
+    - apiVersion: provisioning.cattle.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:agentDeployed: {}
+          f:clientSecretName: {}
+          f:clusterName: {}
+          f:conditions: {}
+          f:fleetWorkspaceName: {}
+          f:observedGeneration: {}
+          f:ready: {}
+      manager: rancher
+      operation: Update
+      subresource: status
+      time: '2025-03-05T07:04:31Z'
+  name: swe645-hw2
+  namespace: fleet-default
+  resourceVersion: '63993'
+  uid: 8801093b-f1e2-4c21-bdcf-46e74719867c
+spec:
+  kubernetesVersion: v1.31.5+rke2r1
+  localClusterAuthEndpoint: {}
+  rkeConfig:
+    chartValues:
+      rke2-calico: {}
+    dataDirectories: {}
+    etcd:
+      snapshotRetention: 5
+      snapshotScheduleCron: 0 */5 * * *
+    machineGlobalConfig:
+      cni: calico
+      disable-kube-proxy: false
+      etcd-expose-metrics: false
+    machinePoolDefaults: {}
+    machineSelectorConfig:
+      - config:
+          protect-kernel-defaults: false
+    registries: {}
+    upgradeStrategy:
+      controlPlaneConcurrency: '1'
+      controlPlaneDrainOptions:
+        deleteEmptyDirData: true
+        disableEviction: false
+        enabled: false
+        force: false
+        gracePeriod: -1
+        ignoreDaemonSets: true
+        ignoreErrors: false
+        postDrainHooks: null
+        preDrainHooks: null
+        skipWaitForDeleteTimeoutSeconds: 0
+        timeout: 120
+      workerConcurrency: '1'
+      workerDrainOptions:
+        deleteEmptyDirData: true
+        disableEviction: false
+        enabled: false
+        force: false
+        gracePeriod: -1
+        ignoreDaemonSets: true
+        ignoreErrors: false
+        postDrainHooks: null
+        preDrainHooks: null
+        skipWaitForDeleteTimeoutSeconds: 0
+        timeout: 120
+status:
+  agentDeployed: true
+  clientSecretName: swe645-hw2-kubeconfig
+  clusterName: c-m-q4fbhhkw
+  conditions:
+    - lastUpdateTime: '2025-02-27T11:03:40Z'
+      status: 'False'
+      type: Reconciling
+    - lastUpdateTime: '2025-02-27T11:00:20Z'
+      status: 'False'
+      type: Stalled
+    - lastUpdateTime: '2025-03-05T05:45:33Z'
+      status: 'True'
+      type: Created
+    - lastUpdateTime: '2025-03-05T07:04:31Z'
+      status: 'True'
+      type: RKECluster
+    - lastUpdateTime: '2025-02-27T11:00:20Z'
+      status: 'True'
+      type: BackingNamespaceCreated
+    - lastUpdateTime: '2025-02-27T11:00:20Z'
+      status: 'True'
+      type: DefaultProjectCreated
+    - lastUpdateTime: '2025-02-27T11:00:20Z'
+      status: 'True'
+      type: SystemProjectCreated
+    - lastUpdateTime: '2025-02-27T11:00:20Z'
+      status: 'True'
+      type: InitialRolesPopulated
+    - lastUpdateTime: '2025-03-05T07:04:31Z'
+      status: 'True'
+      type: Updated
+    - lastUpdateTime: '2025-03-05T07:04:31Z'
+      status: 'True'
+      type: Provisioned
+    - lastUpdateTime: '2025-03-05T05:45:46Z'
+      status: 'True'
+      type: Ready
+    - lastUpdateTime: '2025-02-27T11:00:21Z'
+      status: 'True'
+      type: CreatorMadeOwner
+    - lastUpdateTime: '2025-02-27T11:00:22Z'
+      status: 'True'
+      type: NoDiskPressure
+    - lastUpdateTime: '2025-02-27T11:00:22Z'
+      status: 'True'
+      type: NoMemoryPressure
+    - lastUpdateTime: '2025-02-27T11:00:22Z'
+      status: 'True'
+      type: SecretsMigrated
+    - lastUpdateTime: '2025-02-27T11:00:22Z'
+      status: 'True'
+      type: ServiceAccountSecretsMigrated
+    - lastUpdateTime: '2025-02-27T11:00:22Z'
+      status: 'True'
+      type: RKESecretsMigrated
+    - lastUpdateTime: '2025-02-27T11:00:22Z'
+      status: 'True'
+      type: ACISecretsMigrated
+    - lastUpdateTime: '2025-03-05T05:45:33Z'
+      status: 'True'
+      type: Connected
+    - status: Unknown
+      type: PreBootstrapped
+    - lastUpdateTime: '2025-02-27T11:03:24Z'
+      status: 'True'
+      type: AgentTlsStrictCheck
+    - lastUpdateTime: '2025-02-27T11:03:25Z'
+      status: 'True'
+      type: SystemAccountCreated
+    - lastUpdateTime: '2025-02-27T11:03:27Z'
+      status: 'True'
+      type: AgentDeployed
+    - lastUpdateTime: '2025-02-27T11:03:27Z'
+      status: 'True'
+      type: GlobalAdminsSynced
+    - lastUpdateTime: '2025-02-27T11:03:39Z'
+      status: 'True'
+      type: Waiting
+  fleetWorkspaceName: fleet-default
+  observedGeneration: 2
+  ready: true

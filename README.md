@@ -1,140 +1,215 @@
-# SWE645 HW2 - Frontend & Docker Setup
+# SWE645 HW2 - EC2 Instance Setup and Kubernetes Cluster Deployment using Rancher
 
-This repository contains the **frontend** of the **SWE645 HW2** assignment, which includes HTML files, images, and a Docker setup for running the application with **Tomcat**.
+This repository contains part of the **backend** of the **SWE645 HW2** assignment, which includes YAML files, config files, and images.
+
+YAML Files included for:
+- Cluster
+- Deployment
+- Node Port Service
+- KubeConfig
+
+These YAML Files were not modified manually, they were **auto generated** by following the steps below. YAML Files for the 3 Pods are not included because they could change if a Pod goes down.
+
+Links:
+
+[Home Page](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/)
+
+[Survey Page](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/survey.html)
 
 ---
 
 ## Prerequisites
 
-Before setting up this project, ensure you have the following tools installed:
+Before beginning this part, please complete part 1 from Rana's branch in this repository. Also have with you:
 
-- **Git**: For version control.
-- **Maven**: To build and manage the project.
-- **Docker**: To containerize and run the application.
-- **Java**: Java 11 or later is required to run the application with Tomcat.
+- **Docker Image Tag**: The same image tag you created in part 1.
+- **AWS Account**: To create EC 2 instances to run your cluster.
 
-You can verify that these are installed using the following commands:
-
-```
-git --version
-mvn --version
-docker --version
-java -version
-```
---- 
-
-## Project Structure
-The project contains the following folder structure:
-
-```
-SWE645_HW2_StudentSurvey/
-├── Dockerfile             # Docker configuration to run the app
-├── pom.xml                # Maven configuration for the project
-├── src/
-│   └── main/
-│       └── webapp/
-│           ├── index.html  # Main homepage
-│           ├── survey.html # Survey form
-│           ├── images/     # Images for the frontend
-│           └── WEB-INF/    # Web configurations for Tomcat
-├── target/
-│   └── SWE645_HW2_StudentSurvey.war # Packaged application file
-```
----
 ## Setup Instructions
-#### 1. Clone the repository:
+### 1. Clone the repository:
 To get started, clone this repository to your local machine:
 ```
 git clone https://github.com/USERNAME/REPOSITORY_NAME.git
 cd REPOSITORY_NAME
 ```
 
-#### 2. Build the `.war` file:
-Run the following command to build the project:
+### 2. Log into you AWS Account:
+Here you have two choices:
+
+- [Personal AWS Acount login](https://aws.amazon.com/console/)
+- [AWS Learner Lab login](https://awsacademy.instructure.com/login/canvas)
+
+If your professor gave you an account for AWS Leaner Lab, you can use that to get some free money to used to create your machines(~$50). Otherwise, you will have to create/use your personal account which will charge you for items used in this part. 
+
+**Note: Items created/used in this part will cost money. This is due to features used/needed for this to work correctly and due to stronger machines needed for Kubernetes Cluster support.**
+
+For this assignment, we will be using AWS Learner Lab.
+
+
+### 3. Create EC2 Instances:
+For this part, we will be using two(2) EC2 instances. One will setup the cluster, while the other will run the actual cluster.
+
+- Log into AWS Learner Lab
+
+![alt text](images/pic1.png)
+
+
+- Go to Modules -> Launch AWS Academy Learner Lab
+
+- Click 'Start Lab' and wait a few minutes for it to load. The circle next to AWS will turn green when online. Click that link to go to the AWS Dashboard.
+
+![alt text](images/pic2.png)
+
+
+- On the homepage, search for EC2, click the first option
+
+![alt text](images/pic3.png)
+
+
+- On the EC2 page, click the orage button labeled 'Launch Instance'
+
+- Here, you set up your two machines, we will create both at the same time. First, fill out a name for both machines. Next, on the right, change the number of instances to 2, that way both machines will have the same settings and key pair. Then, select 'Ubuntu' for OS option, default image is fine.
+
+![alt text](images/pic4.png)
+
+- Scroll down. Leave architecture as is. Change instance type to best that suits you. You will want at least 't2.medium' I recommend 't2.large' for more memory. Then select a key pair. You can create a new one or use an existing one. If creating a new one, click the link, and give it a name in the pop-up box. Leave everything else default. You with then download a private key file. 
+
+- **DO NOT LOSE TRACK OF THIS .pem FILE. This is the only time you will get this file.**
+
+![alt text](images/pic5.png)
+
+- Next, setup Network Settings. Create a new security group and Allow SSH, HTTPS, and HTTP traffic inbound from anywhere(0.0.0.0/0). You will also need to add one more rule for port 8080. Click edit, scroll to 'Add security group rule.' Copy the settings as below:
+
+![alt text](images/pic6.png)
+
+- Then, scroll to storage and set it to the size you need. You can get upto 30GB for free. Then, open 'Advanced details', for IAM instance profile, select 'LabInstanceProfile', then click 'Launch Instance' and wait for your machines to be ready.
+
+![alt text](images/pic7.png)
+
+
+### 4. Setup Rancher on one of the instances
+Once your machines are online, we can connect to the both of them. Your machines are ready when the status check shows '2/2 checks passed' on the EC2 Dashboard.
+
+![alt text](images/pic8.png)
+
+**However, before we can connect to them, we need to setup elastic IP addresses for both machines. This step is crucial to ensure your cluster works again automatically if your machines auto-shutoff or you manually turn them off.**
+
+ - On the EC2 Dashboard, select Elastic IP addresses:
+
+ ![alt text](images/pic9.png)
+
+ - On the Elastic IP page, click 'Allocate Elastic IP address', leave everything default and click 'Allocate' at the bottom.
+
+![alt text](images/pic10.png)
+
+- With your new IP address, select it, then click Actions->Associate Elastic IP address.
+
+![alt text](images/pic11.png)
+
+- On this page, select instance, then the instance you want to associate it with, and click to allow reassociation. This is incase you have an issue and need to reassign this IP without creating a new one. Repeat this process for both machines, each with there **OWN** IP address.
+
+![alt text](images/pic12.png)
+
+- Now you can connect to your machines. On the EC2 Dashboard, select instances. Then, one at a time, select an instance, click 'Connect'->Session Manager->Connect. If successful, a new tab will open connected to your machine.
+
+- On both machines, run the following commands one after the other
+``` shell
+    $ sudo su
+    $ sudo apt-get update
+    $ sudo apt upgrade -y
+    $ snap install kubectl --classic
+    $ sudo apt install docker.io
 ```
-mvn clean package
+
+- Now, on **ONE** of the machines we will setup Rancher. Go to [Rancher](https://www.rancher.com/quick-start) and copy the command listed there. Run this command on the one machine and wait for it to finish.
+
+![alt text](images/pic13.png)
+
+- When it is finished, run this command:
+``` shell
+    $ sudo docker ps
 ```
-This will generate a `.war` file under the target/ directory.
+- This will give you the container-ID needed for setup
 
+![alt text](images/pic14.png)
 
-#### 3. Verify the `.war` file:
-Ensure that the `.war` file was created successfully by checking the target folder:
+- Then, click on the public IPv4 DNS address to access the Rancher dashboard. 
+
+![alt text](images/pic15.png)
+
+- It will give you a privacy warning, but it is okay. Click 'Show advanced' and click the proceed link there. Follow the directions on screen to setup your account with this container. You will use the following command:
+```shell
+    $ docker logs container-id 2>&1 | grep "Bootstrap Password:"
 ```
-ls target/
+- Make sure to replace "container-id" with your container's id
+
+- Paste this password given into the Rancher dashboard. You can now setup the admin account. You can either randomly generate a password or create your own, save this password. Then make sure to accept terms and conditions and click continue. You login for future use will be the following:
+
+    - Username: admin
+    - Password: "Your password you set"
+
+- Once logged in, you will see the dashboard and any existing clusters. We will create a new one to run on our **OTHER** EC2 instance. 
+
+![alt text](images/pic16.png)
+
+### 5. Create our cluter:
+
+- Click on 'create' from the previous image
+
+- In the next window, scroll and click on "Custom"
+
+![alt text](images/pic17.png)
+
+- Here, name your cluster, then click Create:
+
+![alt text](images/pic18.png)
+
+- Then, make sure etcd, Control Plane, and Worker are all checked. Then, click the insecure checkbox and copy the command given into your **SECOND** EC2 instance.
+
+![alt text](images/pic19.png)
+
+- Let that run and wait untill your cluster is ready. It will be ready when you see an active status like in ours below:
+
+![alt text](images/pic20.png)
+
+- Now, in order to use the 'kubeclt' command we installed earlier, we need to copy the KubeConfig to our machine running the cluster (second machine). To do this, click on your cluster, ours is swe645-hw2 in the previous picture. Click on the three dots in the top right and click then selected option in the picture below:
+
+![alt text](images/pic21.png)
+
+- Now past it in the following location. You with need to make the hidden directory '.kube'
+
+```shell
+    $ sudo mkdir .kube
+    $ sudo vi .kube/config
 ```
-You should see the file `SWE645_HW2_StudentSurvey.war`.
+- Paste and save in that file. Now with our cluster setup, we can deploy our application with a Deployment.
 
----
+### 6.Deploy web application using Deployment:
 
-## Running the Application Running with Docker
-Once you've built the `.war` file, you can run the application using Docker.
+- Back on the Racher Dashboard. Click home, then click your cluster to access your cluster dashboard like below:
 
-#### 1. Build the Docker image:
-Run the following command to build the Docker image for the application:
-```
-docker build -t swe645-hw2-studentsurvey:latest .
-```
+![alt text](images/pic22.png)
 
-#### 2. Run the Docker container:
-After building the image, run the application in a container:
-```
-docker run -d -p 8080:8080 swe645-hw2-studentsurvey:latest
-```
+- To create a Deployment, click Workloads->Deployments and click the create button.
 
-#### 3.Access the application:
-Open your web browser and go to the following URL to see the application running:
+- Fill in custom name, set replica count to 3, paste your Docker Image tag from part 1 in Container Image box. Then scroll and click 'Add Port or Service'. Select Node Port, name it, set Private Container Port to 8080. Leave everything else default. Click create and wait for pods to deploy, it will say active like our cluster before:
 
-```
-http://localhost:8080/StudentSurvey/survey.html
-```
----
-## Rebuild and Push for a Different Architecture (AMD64) 
-Follow these steps:
+![alt text](images/pic23.png)
 
-#### 1. Rebuild the Image for the AMD64 Architecture:
-Run the following command:
-```
-docker buildx build --platform linux/amd64 -t ranaalshehri/swe645-hw2-student-survey-amd64:latest .
-```
+- Once you see it active state, click Service Discovery and click on the Node Port you created for port 8080. This will open a link. Now you just need to add the display name. In our case "/StudentSurvey" to see home page and "/StudentSurvey/survey.html" to see the survey page at the end of the url.
 
-#### 2.Push the New Image to Docker Hub:
-Open your web browser and go to the following URL to see the application running:
+![alt text](images/pic24.png)
 
-```
-http://localhost:8080/StudentSurvey/survey.html
-```
 
-#### 3. Pull the Image:
-Use the following command to pull the new image after confirming its existence on Docker Hub:
+- Site you see after clicking link
+![alt text](images/pic25.png)
 
-```
-docker push ranaalshehri/swe645-hw2-student-survey-amd64:latest
-```
----
+- Home page at [link](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/)
 
-## Verifying the Application
+![alt text](images/pic26.png)
 
-Once you run the application, ensure the following pages are accessible:
+- Survey page at [link](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/survey.html)
 
-- **Homepage**: `http://localhost:8080/StudentSurvey/` (index.html)
-- **Survey Page**: `http://localhost:8080/StudentSurvey/survey.html`
+![alt text](images/pic27.png)
 
----
-## Docker Setup
-If you decide to run the app using Docker, the `Dockerfile` provided in the project is configured to work with Tomcat 9.
-
-### Dockerfile Content:
-
-```
-FROM tomcat:9.0-jdk15
-
-# Copy the built WAR file into Tomcat's webapps directory
-COPY target/SWE645_HW2_StudentSurvey.war /usr/local/tomcat/webapps/StudentSurvey.war
-
-# Expose port 8080 for access
-EXPOSE 8080
-
-# Start Tomcat
-CMD ["catalina.sh", "run"]
-```
----
+**NOTE: Links will only work in your machines are running. If you are using AWS Learner Lab. machines auto-shutoff after 4hrs.**
