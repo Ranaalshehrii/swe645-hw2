@@ -36,7 +36,7 @@ pipeline {
                     // Build the Docker image using the Dockerfile in the repository root.
                     // The Dockerfile should have a COPY command like:
                     // COPY target/SWE645_HW2_StudentSurvey.war /usr/local/tomcat/webapps/StudentSurvey.war
-                    sh "docker build -t ${DOCKER_REPO}:latest ."
+                    sh "sudo docker build -t ${DOCKER_REPO}:latest ."
                 }
             }
         }
