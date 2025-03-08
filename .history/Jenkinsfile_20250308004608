@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB_REPO = "ranaalshehri/swe645-hw2-student-survey-amd64"
+        DOCKERHUB_CREDENTIALS = credentials('docker-pass') 
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t ${DOCKERHUB_REPO}:latest .'
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                sh '''
+                docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW
+                docker push ${DOCKERHUB_REPO}:latest
+                '''
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl rollout restart deployment studentsurvey -n default'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
+    }
+}
