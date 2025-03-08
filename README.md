@@ -12,9 +12,9 @@ These YAML Files were not modified manually, they were **auto generated** by fol
 
 Links:
 
-[Home Page](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/)
+[Home Page](http://ec2-54-205-232-217.compute-1.amazonaws.com:31221/StudentSurvey/)
 
-[Survey Page](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/survey.html)
+[Survey Page](http://ec2-54-205-232-217.compute-1.amazonaws.com:31221/StudentSurvey/survey.html)
 
 ---
 
@@ -196,20 +196,41 @@ Once your machines are online, we can connect to the both of them. Your machines
 
 ![alt text](images/pic23.png)
 
-- Once you see it active state, click Service Discovery and click on the Node Port you created for port 8080. This will open a link. Now you just need to add the display name. In our case "/StudentSurvey" to see home page and "/StudentSurvey/survey.html" to see the survey page at the end of the url.
+- Once you see it active state, click Service Discovery and take a look at the node port you created. Take note of the port number that was chosen randomly since we left that option blank. In out case the port number is 31221.
 
 ![alt text](images/pic24.png)
 
+### 7. Add new security rule and access application
 
-- Site you see after clicking link
+- In order to see our application, we need to add this port number as a new inbound rule to our security group just like we did for ports 80, 8080, 22, and 443. Go back to your AWS Dashboard on the EC2 instance page. Scroll down under Network & Security and click Security Groups.
+
 ![alt text](images/pic25.png)
 
-- Home page at [link](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/)
+- Here select the security group that your machines are using. Unless you customized the name it is typically some form of 'launch-wizard-#'. In our case, it is launch-wizard-1. Select the group, then click Actions->Edit inbound rules.
+
 
 ![alt text](images/pic26.png)
 
-- Survey page at [link](https://ec2-52-3-136-186.compute-1.amazonaws.com/k8s/clusters/c-m-q4fbhhkw/api/v1/namespaces/default/services/http:survey-deployment:8080/proxy/StudentSurvey/survey.html)
+
+- Now, click 'Add rule' at the bottom and set a new rule similar to the one highlighted. Make sure to use the port number from **YOUR** NodePort service. Then for source select 'Anywhere-IPv4' to add the '0.0.0.0/0' option you see in the picture below. Click save rules.
 
 ![alt text](images/pic27.png)
+
+
+- With this rule added, we can now access our application using the NodePort service we created. Go back to your EC2 instances page. Select the **SECOND** machine, the one that has the actual cluster running on it. Click on the Public IPv4 DNS link to get this page. This is expected.
+
+![alt text](images/pic28.png)
+
+- To access our home page and survey page, we need to add specific parts to the end of this URL. You need to add ":"NodePort Number"/"war file name"/ to get the home page and add ":"NodePort Number"/"war file name"/"survey file name".html/ to get the survey file. In our case, we add "::31221/StudentSurvey/" and ":31221/StudentSurvey/survey.html" to the end of the URL. 
+
+**NOTE: Make sure to change form https to http or the link won't work**
+
+- Home page at [link](http://ec2-54-205-232-217.compute-1.amazonaws.com:31221/StudentSurvey/)
+
+![alt text](images/pic29.png)
+
+- Survey page at [link](http://ec2-54-205-232-217.compute-1.amazonaws.com:31221/StudentSurvey/survey.html)
+
+![alt text](images/pic30.png)
 
 **NOTE: Links will only work in your machines are running. If you are using AWS Learner Lab. machines auto-shutoff after 4hrs.**
