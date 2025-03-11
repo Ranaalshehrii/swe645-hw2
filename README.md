@@ -98,17 +98,20 @@ docker buildx build --platform linux/amd64 -t ranaalshehri/swe645-hw2-student-su
 ```
 
 #### 5.2. Push the New Image to Docker Hub:
-Open your web browser and go to the following URL to see the application running:
-
+Before pushing, ensure you're logged in to Docker Hub:
 ```
-http://localhost:8080/StudentSurvey/survey.html
+docker login
 ```
 
-#### 5.3. Pull the Image:
-Use the following command to pull the new image after confirming its existence on Docker Hub:
-
+Then push the image:
 ```
 docker push ranaalshehri/swe645-hw2-student-survey-amd64:latest
+```
+
+#### 5.3. Pull the Image (If Needed):
+Once the image is successfully pushed, you can pull it on another machine using:
+```
+docker pull ranaalshehri/swe645-hw2-student-survey-amd64:latest
 ```
 ---
 ## 6. Docker Setup
