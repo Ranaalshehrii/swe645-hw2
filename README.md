@@ -56,6 +56,9 @@ Run the following command to build the project:
 ```
 mvn clean package
 ```
+
+![Build the `.war` file](Screenshots/3.2.png)
+
 This will generate a `.war` file under the target/ directory.
 
 
