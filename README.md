@@ -70,7 +70,7 @@ You should see the file `SWE645_HW2_StudentSurvey.war`.
 Once you've built the `.war` file, you can run the application using Docker.
 
 #### 1. Build the Docker image:
-After running Docker using **Docker Desktop**, run the following command to build the Docker image for the application:
+Run the following command to build the Docker image for the application:
 ```
 docker build -t swe645-hw2-studentsurvey:latest .
 ```
