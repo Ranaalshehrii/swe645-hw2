@@ -85,7 +85,7 @@ docker build -t swe645-hw2-studentsurvey:latest .
 
 ![Build the Docker image](Screenshots/4.1...png)
 
-![Build the Docker image](Screenshots/4.1 (2)...png)
+![Build the Docker image](Screenshots/4.1%20(2).png)
 
 #### 4.2. Run the Docker container:
 After building the image, run the application in a container:
@@ -95,7 +95,7 @@ docker run -d -p 8080:8080 swe645-hw2-studentsurvey:latest
 
 ![Build the Docker image](Screenshots/4.2...png)
 
-![Build the Docker image](Screenshots/4.2 (2)...png)
+![Build the Docker image](Screenshots/4.2%20(2).png)
 
 #### 4.3. Access the application:
 Open your web browser and go to the following URL to see the application running:
