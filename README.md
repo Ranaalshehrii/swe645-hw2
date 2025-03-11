@@ -57,7 +57,7 @@ Run the following command to build the project:
 mvn clean package
 ```
 
-![Build the `.war` file](Screenshots/3.2.png)
+![Build the `.war` file](Screenshots/3.2...png)
 
 This will generate a `.war` file under the target/ directory.
 
@@ -67,6 +67,9 @@ Ensure that the `.war` file was created successfully by checking the target fold
 ```
 ls target/
 ```
+
+![Verify the `.war` filee](Screenshots/3.3...png)
+
 You should see the file `SWE645_HW2_StudentSurvey.war`.
 
 ---
@@ -80,11 +83,19 @@ Run the following command to build the Docker image for the application:
 docker build -t swe645-hw2-studentsurvey:latest .
 ```
 
+![Build the Docker image](Screenshots/4.1...png)
+
+![Build the Docker image](Screenshots/4.1 (2)...png)
+
 #### 4.2. Run the Docker container:
 After building the image, run the application in a container:
 ```
 docker run -d -p 8080:8080 swe645-hw2-studentsurvey:latest
 ```
+
+![Build the Docker image](Screenshots/4.2...png)
+
+![Build the Docker image](Screenshots/4.2 (2)...png)
 
 #### 4.3. Access the application:
 Open your web browser and go to the following URL to see the application running:
@@ -92,6 +103,8 @@ Open your web browser and go to the following URL to see the application running
 ```
 http://localhost:8080/StudentSurvey/survey.html
 ```
+![Access the application](Screenshots/4.3...png)
+
 ---
 ## 5. Rebuild and Push for a Different Architecture (AMD64) 
 Follow these steps:
