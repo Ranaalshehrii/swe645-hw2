@@ -48,7 +48,7 @@ To get started, clone this repository to your local machine:
 git clone https://github.com/USERNAME/REPOSITORY_NAME.git
 cd REPOSITORY_NAME
 ```
-![Clone the repository](Screenshots/3.1...png)
+![Clone the repository](Screenshots/3.1.png)
 
 
 #### 3.2. Build the `.war` file:
@@ -57,7 +57,7 @@ Run the following command to build the project:
 mvn clean package
 ```
 
-![Build the `.war` file](Screenshots/3.2...png)
+![Build the `.war` file](Screenshots/3.2.png)
 
 This will generate a `.war` file under the target/ directory.
 
@@ -68,7 +68,7 @@ Ensure that the `.war` file was created successfully by checking the target fold
 ls target/
 ```
 
-![Verify the `.war` filee](Screenshots/3.3...png)
+![Verify the `.war` filee](Screenshots/3.3.png)
 
 You should see the file `SWE645_HW2_StudentSurvey.war`.
 
@@ -83,9 +83,9 @@ Run the following command to build the Docker image for the application:
 docker build -t swe645-hw2-studentsurvey:latest .
 ```
 
-![Build the Docker image](Screenshots/4.1...png)
+![Build the Docker image](Screenshots/4.1.png)
 
-![Build the Docker image](Screenshots/4.1%20(2).png)
+![Build the Docker image](Screenshots/4.1(2).png)
 
 #### 4.2. Run the Docker container:
 After building the image, run the application in a container:
@@ -93,9 +93,9 @@ After building the image, run the application in a container:
 docker run -d -p 8080:8080 swe645-hw2-studentsurvey:latest
 ```
 
-![Build the Docker image](Screenshots/4.2...png)
+![Build the Docker image](Screenshots/4.2.png)
 
-![Build the Docker image](Screenshots/4.2%20(2).png)
+![Build the Docker image](Screenshots/4.2(2).png)
 
 #### 4.3. Access the application:
 Open your web browser and go to the following URL to see the application running:
@@ -103,7 +103,7 @@ Open your web browser and go to the following URL to see the application running
 ```
 http://localhost:8080/StudentSurvey/survey.html
 ```
-![Access the application](Screenshots/4.3...png)
+![Access the application](Screenshots/4.3.png)
 
 ---
 ## 5. Rebuild and Push for a Different Architecture (AMD64) 
@@ -114,6 +114,10 @@ Run the following command:
 ```
 docker buildx build --platform linux/amd64 -t ranaalshehri/swe645-hw2-student-survey-amd64:latest .
 ```
+![Rebuild the Image for the AMD64 Architecture](Screenshots/5.1.png)
+
+![Rebuild the Image for the AMD64 Architecture](Screenshots/5.1(2).png)
+
 
 #### 5.2. Push the New Image to Docker Hub:
 Before pushing, ensure you're logged in to Docker Hub:
@@ -125,6 +129,7 @@ Then push the image:
 ```
 docker push ranaalshehri/swe645-hw2-student-survey-amd64:latest
 ```
+![Push the New Image](Screenshots/5.2.png)
 
 #### 5.3. Pull the Image (If Needed):
 Once the image is successfully pushed, you can pull it on another machine using:
@@ -149,4 +154,7 @@ EXPOSE 8080
 # Start Tomcat
 CMD ["catalina.sh", "run"]
 ```
+
+![Dockerfile Content](Screenshots/6.1.png)
+
 ---
