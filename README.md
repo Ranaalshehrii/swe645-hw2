@@ -48,8 +48,7 @@ To get started, clone this repository to your local machine:
 git clone https://github.com/USERNAME/REPOSITORY_NAME.git
 cd REPOSITORY_NAME
 ```
-![Clone the repository](Screenshots/3.1.png)
-
+<img src="Screenshots/3.1.png" alt="Clone the repository" style="border: 1px solid black;">
 
 #### 3.2. Build the `.war` file:
 Run the following command to build the project:
