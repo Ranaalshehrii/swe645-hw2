@@ -1,0 +1,208 @@
+<!-- Rana Alshehri - G01321813 -->
+<!-- SWE 645 - Assignment #1 -->
+<!-- PART 2 -->
+<!-- This file contains the student survey form, allowing users to submit personal information, preferences, and feedback. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Survey</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <style>
+        body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+        body {font-size:16px;}
+    </style>
+</head>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+    <div class="w3-container">
+        <h3 class="w3-padding-64"><b>Assignment #2</b></h3>
+    </div>
+    <div class="w3-bar-block">
+        <!-- <a href="index.html" class="w3-bar-item w3-button w3-hover-white">Home</a>  -->
+        <!-- <a href="http://localhost:8080/StudentSurvey" class="w3-bar-item w3-button w3-hover-white">Home</a>  -->
+        <a href="survey.html" class="w3-bar-item w3-button w3-hover-white">Student Survey</a> 
+        <!-- <a href="http://rana-swe645.com.s3-website.us-east-2.amazonaws.com/error.html" class="w3-bar-item w3-button w3-hover-white">Error Page</a>  -->
+    </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+    <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+    <span>Student Survey</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+    <!-- Student Survey Form -->
+    <div class="w3-container" id="survey" style="margin-top:80px">
+        <h1 class="w3-xxxlarge w3-text-red"><b>Student Survey</b></h1>
+        <hr style="width:50px;border:5px solid red" class="w3-round">
+        
+        <!-- Success Message Container -->
+        <div id="successMessage" class="w3-panel w3-green w3-display-container" style="display:none; margin-top: 20px;">
+            <span onclick="this.parentElement.style.display='none'" class="w3-button w3-large w3-display-topright">&times;</span>
+            <h3>Success!</h3>
+            <p>Your survey has been submitted successfully.</p>
+        </div>
+
+        <form action="process_survey.php" method="POST">
+            <!-- Required Personal Information -->
+            <div class="w3-section">
+                <label>First Name <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="text" name="first_name" required>
+            </div>
+
+            <div class="w3-section">
+                <label>Last Name <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="text" name="last_name" required>
+            </div>
+
+            <div class="w3-section">
+                <label>Street Address <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="text" name="address" required>
+            </div>
+
+            <div class="w3-section">
+                <label>City <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="text" name="city" required>
+            </div>
+
+            <div class="w3-section">
+                <label>State <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="text" name="state" required>
+            </div>
+
+            <div class="w3-section">
+                <label>Zip Code <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="text" name="zip" required>
+            </div>
+
+            <div class="w3-section">
+                <label>Telephone Number <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="tel" name="phone" required>
+            </div>
+
+            <div class="w3-section">
+                <label>Email <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="email" name="email" required>
+            </div>
+
+            <div class="w3-section">
+                <label>Date of Survey <span style="color:red">*</span></label>
+                <input class="w3-input w3-border" type="date" name="survey_date" required>
+            </div>
+
+            <!-- Checkboxes: What did you like most? -->
+            <div class="w3-section">
+                <label><b>What did you like most about the campus?</b></label><br>
+                <input type="checkbox" name="likes[]" value="students"> Students<br>
+                <input type="checkbox" name="likes[]" value="location"> Location<br>
+                <input type="checkbox" name="likes[]" value="campus"> Campus<br>
+                <input type="checkbox" name="likes[]" value="atmosphere"> Atmosphere<br>
+                <input type="checkbox" name="likes[]" value="dorm_rooms"> Dorm Rooms<br>
+                <input type="checkbox" name="likes[]" value="sports"> Sports<br>
+            </div>
+
+            <!-- Radio Buttons: How did you hear about the university? -->
+            <div class="w3-section">
+                <label><b>How did you hear about this university?</b></label><br>
+                <input type="radio" name="interest_source" value="friends" required> Friends<br>
+                <input type="radio" name="interest_source" value="television" required> Television<br>
+                <input type="radio" name="interest_source" value="internet" required> Internet<br>
+                <input type="radio" name="interest_source" value="other" required> Other<br>
+            </div>
+
+            <!-- Dropdown: Likelihood of recommendation -->
+            <div class="w3-section">
+                <label><b>Likelihood of recommending this school to others:</b></label>
+                <select class="w3-select w3-border" name="recommend">
+                    <option value="very_likely">Very Likely</option>
+                    <option value="likely">Likely</option>
+                    <option value="unlikely">Unlikely</option>
+                </select>
+            </div>
+
+            <!-- Raffle Entry (Optional) -->
+             <!-- The Raffle encourages participation by offering a reward (movie ticket) to winners -->
+            <div class="w3-section">
+                <label>
+                    <b>Enter 10 comma-separated numbers (1-100) for the Raffle:</b>
+                </label>
+                <input class="w3-input w3-border" type="text" name="raffle" id="raffle"
+                    placeholder="e.g., 5, 23, 45, 67, 89, 12, 30, 50, 75, 99">
+                <p id="raffleError" class="w3-text-red" style="display:none;">If entered, please provide exactly 10 numbers between 1-100, separated by commas.</p>
+            </div>
+
+            <!-- Additional Comments -->
+            <div class="w3-section">
+                <label><b>Additional Comments</b></label>
+                <textarea class="w3-input w3-border" name="comments" rows="4"></textarea>
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <div class="w3-section">
+                <button type="submit" class="w3-button w3-red w3-padding-large">Submit</button>
+                <button type="reset" class="w3-button w3-grey w3-padding-large">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px">
+    <p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-opacity">w3.css</a></p>
+</div>
+
+<script>
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+<!-- JavaScript to validate the Raffle field: Ensures 10 numbers (1-100) only if entered -->
+<script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission to show the message
+
+        var raffleInput = document.getElementById("raffle").value.trim();
+        var errorMsg = document.getElementById("raffleError");
+
+        // Reset error message before validation
+        errorMsg.style.display = "none";
+
+        // Raffle validation (if entered)
+        if (raffleInput !== "") {
+            var numbers = raffleInput.split(",").map(num => num.trim());
+            var isValid = numbers.length === 10 && numbers.every(num => !isNaN(num) && num >= 1 && num <= 100);
+
+            if (!isValid) {
+                errorMsg.style.display = "block"; // Show error message
+                return; // Stop further actions
+            }
+        }
+
+        // If validation passes, show success message and reset the form
+        document.getElementById("successMessage").style.display = "block";
+        this.reset(); // Reset the form
+    });
+</script>
+
+    
+    
+    
+</body>
+</html>
