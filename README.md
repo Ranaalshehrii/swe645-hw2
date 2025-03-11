@@ -120,7 +120,7 @@ Once you run the application, ensure the following pages are accessible:
 - **Survey Page**: `http://localhost:8080/StudentSurvey/survey.html`
 
 ---
-## Docker Setup
+## 7. Docker Setup
 If you decide to run the app using Docker, the `Dockerfile` provided in the project is configured to work with Tomcat 9.
 
 ### Dockerfile Content:
