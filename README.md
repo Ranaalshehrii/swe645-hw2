@@ -111,16 +111,7 @@ Use the following command to pull the new image after confirming its existence o
 docker push ranaalshehri/swe645-hw2-student-survey-amd64:latest
 ```
 ---
-
-## 6. Verifying the Application
-
-Once you run the application, ensure the following pages are accessible:
-
-- **Homepage**: `http://localhost:8080/StudentSurvey/` (index.html)
-- **Survey Page**: `http://localhost:8080/StudentSurvey/survey.html`
-
----
-## 7. Docker Setup
+## 6. Docker Setup
 If you decide to run the app using Docker, the `Dockerfile` provided in the project is configured to work with Tomcat 9.
 
 ### Dockerfile Content:
